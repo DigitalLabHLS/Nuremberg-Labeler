@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" media="print" href="./css/print.css">
+<link rel="stylesheet" media="screen" href="./css/screen.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<title>Nuremberg Folder Labeler</title>
+</head>
+<body>
+	<div class="screencontainer">
+        <div class="formcontainer">
+            <div class="formelement">
+            <label for="bar_code">Bar Code</label><input type="text" class="warning" id="bar_code"><br>
+            </div>
+            <div class="formelement">
+            <label for="box">Box</label><input type="text" class="warning" id="box"><br>
+            </div>
+            <div class="formelement">
+            <label for="folder">Folder</label><input type="text" class="warning" id="folder"><br>
+            </div>
+        </div>
+        Label Sheet Preview:
+        <div class="screenoutput">
+            <h1>Nuremberg Scanner Cover Sheet: <span class="box_display"></span>/<span class="folder_display"></span></h1>
+            <h3><span class="bar_code_display"></span></h3>
+        <img class="outputbar" src=""><br>
+        Box: <span class="box_display"></span><br>
+        Folder: <span class="folder_display"></span><br>
+        HD Bar Code: <span class="bar_code_display"></span><br>
+        </div>
+    </div>
+    <div class="printcontainer">
+            <h1>Nuremberg Scanner Cover Sheet: <span class="box_display"></span>/<span class="folder_display"></span></h1>
+            <h3><span class="bar_code_display"></span></h3>
+    	<img class="outputbar" src=""><br>
+
+        Box: <span class="box_display"></span><br>
+        Folder: <span class="folder_display"></span><br>
+        HD Bar Code: <span class="bar_code_display"></span><br>
+    </div>
+</body>
+<script>
+	$( "input" ).keyup(function() {
+        var bcval = "NMBG-" + $( "#bar_code" ).val();
+    	var bxval = $( "#box" ).val();
+    	var flval = $( "#folder" ).val();
+        var baroutput = bcval.toUpperCase() + "-" + bxval.toUpperCase() + "-" + flval.toUpperCase();
+        $( ".outputbar" ).attr('src', 'http://www.barcodesinc.com/generator/image.php?style=453&type=C39&width=475&height=100&xres=1&font=5&code=' + baroutput);
+
+        $(".bar_code_display").html($( "#bar_code" ).val());
+        $(".box_display").html(bxval.toUpperCase());
+        $(".folder_display").html(flval.toUpperCase());
+    }).keyup();
+
+	$( "input" ).blur(function() {
+        var value = $(this).val();
+        if (value.length >= 1) {
+            $( this ).removeClass( "warning" );
+        }
+        else {
+            if (!$(this).hasClass("warning")) {
+                $(this).addClass("warning");
+            }
+        }
+  }); 
+ 
+ window.onload = function() {
+    document.getElementById('bar_code').focus();  
+} 
+</script>
+</html>

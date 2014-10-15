@@ -1,0 +1,31 @@
+.printcontainer {
+	display: none;	
+}
+
+.screencontainer {
+	width: 70%;
+	margin-left: 15%;	
+	margin-right: 15%;	
+	background-color: #FAFAFA;
+	text-align: center;
+}
+
+.screenoutput {
+	background-color: #DADADA;
+	margin-left: auto;
+	margin-top: 20px;
+}
+
+.formcontainer {
+	background-color: #EDEDED;
+
+}
+.formelement {
+	display: inline-block;
+	width: 33%;
+	font-size: 1.25em;
+}
+
+.warning {
+	border: medium dashed red;
+}

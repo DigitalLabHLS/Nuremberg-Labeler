@@ -9,58 +9,89 @@
 </head>
 <body>
 	<div class="screencontainer">
+        <H1>Nuremberg Cover Sheet Generator</H1>
+        <div class="instruction">Simply fill out all fields, and print. Refresh to start over.</div>
         <div class="formcontainer">
-            <div class="formelement">
-            <label for="bar_code">Bar Code</label><input type="text" class="warning" id="bar_code"><br>
+            <div class="formelement warning">
+            <input type="text" id="bar_code" placeholder="Barcode">
             </div>
-            <div class="formelement">
-            <label for="box">Box</label><input type="text" class="warning" id="box"><br>
+            <div class="formelement warning">
+            <input type="text" id="folderstart" placeholder="Folder Range Start">
             </div>
-            <div class="formelement">
-            <label for="folder">Folder</label><input type="text" class="warning" id="folder"><br>
+            <div class="formelement warning">
+            <input type="text" id="folderend" placeholder="Folder Range End"> 
             </div>
         </div>
-        Label Sheet Preview:
-        <div class="screenoutput">
-            <h1>Nuremberg Scanner Cover Sheet: <span class="box_display"></span>/<span class="folder_display"></span></h1>
-            <h3><span class="bar_code_display"></span></h3>
-        <img class="outputbar" src=""><br>
-        Box: <span class="box_display"></span><br>
-        Folder: <span class="folder_display"></span><br>
-        HD Bar Code: <span class="bar_code_display"></span><br>
+        <div class="screenoutput waiting">
+
+            Please complete the form.
+
         </div>
     </div>
     <div class="printcontainer">
-            <h1>Nuremberg Scanner Cover Sheet: <span class="box_display"></span>/<span class="folder_display"></span></h1>
-            <h3><span class="bar_code_display"></span></h3>
-    	<img class="outputbar" src=""><br>
-
-        Box: <span class="box_display"></span><br>
-        Folder: <span class="folder_display"></span><br>
-        HD Bar Code: <span class="bar_code_display"></span><br>
     </div>
 </body>
 <script>
 	$( "input" ).keyup(function() {
-        var bcval = "NMBG-" + $( "#bar_code" ).val();
-    	var bxval = $( "#box" ).val();
-    	var flval = $( "#folder" ).val();
-        var baroutput = bcval.toUpperCase() + "-" + bxval.toUpperCase() + "-" + flval.toUpperCase();
-        $( ".outputbar" ).attr('src', 'http://www.barcodesinc.com/generator/image.php?style=453&type=C39&width=475&height=100&xres=1&font=5&code=' + baroutput);
 
-        $(".bar_code_display").html($( "#bar_code" ).val());
-        $(".box_display").html(bxval.toUpperCase());
-        $(".folder_display").html(flval.toUpperCase());
+        var fsv = $("#folderstart").val();
+        var fev = $("#folderend").val();
+        var bcv = $("#bar_code").val();
+        var generated=false;
+        if (fsv.length >= 1 && fev.length >= 1 && bcv.length >= 1) {
+
+
+            var bcval = "NRMB-" + $( "#bar_code" ).val();
+        	var fstart = parseInt($( "#folderstart" ).val());
+            var fend = parseInt($( "#folderend" ).val());
+            var output = '';
+            var incrementor = fstart;
+            $(".screenoutput").removeClass( "waiting" );
+            $(".screenoutput").addClass("notready");
+            $(".screenoutput").html("Please Wait");
+            do {
+               console.log(incrementor);
+                output = output + "<div class='printcontainer'><h3>Nuremberg Trial Document Scanner Cover Sheet</h3>";
+
+                output = output + "<h1>" + bcval.toUpperCase() + "-" + incrementor + " </h1>";
+                   output = output + " <img class='outputbar' src='http://www.barcodesinc.com/generator/image.php?style=453&type=C39&width=950&height=100&xres=3&font=5&code=" + bcval.toUpperCase() + "-" + incrementor +"'><br>";
+                    output = output + "<footer>";
+                     output = output + "   <h2><big>Folder:</big> <span class='folder_display'>" + incrementor + "</span></h2>";
+                    output = output + "    <h2><big>HD Bar Code:</big> <span class='bar_code_display'>" + $( "#bar_code" ).val() + "</span></h2>";
+                   output = output + " </footer>";
+               output = output + " </div>";
+                incrementor += 1;
+                var generated=true;
+            } while (incrementor <= fend);
+            $(".printcontainer").html(output);
+        
+            if (generated === true) {
+                $(".screenoutput").removeClass( "notready" );
+                $(".screenoutput").addClass("ready");
+                $(".screenoutput").html("Ready to Print");
+            } else {
+                $(".screenoutput").removeClass( "ready" );
+                $(".screenoutput").addClass("notready");
+                $(".screenoutput").html("There might have been a problem. Please ensure that all fields are filled out properly, and folders are numeric.");
+            }
+        } else {
+            $(".screenoutput").removeClass( "ready" );
+            $(".screenoutput").addClass("waiting");
+            $(".screenoutput").html("Please complete the form.");
+        }
+
+
+
     }).keyup();
 
 	$( "input" ).blur(function() {
         var value = $(this).val();
         if (value.length >= 1) {
-            $( this ).removeClass( "warning" );
+            $( this ).parent().removeClass( "warning" );
         }
         else {
-            if (!$(this).hasClass("warning")) {
-                $(this).addClass("warning");
+            if (!$(this).parent().hasClass("warning")) {
+                $(this).parent().addClass("warning");
             }
         }
   }); 

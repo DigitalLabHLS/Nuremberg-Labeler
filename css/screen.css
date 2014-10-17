@@ -1,3 +1,25 @@
+@import url(http://fonts.googleapis.com/css?family=Montserrat+Alternates:400,700|Josefin+Sans);
+@import url(http://fonts.googleapis.com/css?family=UnifrakturMaguntia);
+
+body {
+	font-family: 'Montserrat Alternates', sans-serif;
+	/*font-family: 'Playfair Display', serif;*/
+	background-color: black;
+	color: white;
+}
+
+h1 {
+	font-size: 3em;
+	color: #000000;
+	font-family: 'UnifrakturMaguntia', cursive;
+}
+
+input[type="text"] {
+	font-size: 18px;
+    width: 90%;
+    border: none;
+}
+
 .printcontainer {
 	display: none;	
 }
@@ -6,26 +28,64 @@
 	width: 70%;
 	margin-left: 15%;	
 	margin-right: 15%;	
-	background-color: #FAFAFA;
 	text-align: center;
 }
 
+
+.screencontainer h1 {
+	background-color: #339933;
+	color: white;
+	padding: 10px;
+}
+
+.instruction {
+	font-size: .75em;
+}
+
+.instruction::before { 
+	content: "Instructions: ";
+}
+
+.ready {
+	background-color: #66FF66;
+}
+
+
+.notready {
+	background-color: #FF6666;
+}
+
+.waiting {
+	background-color: #6666FF;
+}
+
 .screenoutput {
-	background-color: #DADADA;
 	margin-left: auto;
 	margin-top: 20px;
+	border-radius: 20px;
+	font-size: 2em;
+}
+.screenoutput::before {
+	content: "Status: ";
 }
 
 .formcontainer {
 	background-color: #EDEDED;
+	padding: 20px;
+	padding-bottom: 5px;
+	border-radius: 20px;
 
 }
 .formelement {
-	display: inline-block;
-	width: 33%;
+	width: 50%;
 	font-size: 1.25em;
+	margin-bottom: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 20px;
+	background-color: #FFFFFF;
 }
 
 .warning {
-	border: medium dashed red;
+	border: 3px dashed red;
 }
